@@ -5,6 +5,11 @@ local testingShell = false
 local inObjectPreview = false
 local tempObject, tempObjectModel, tempObjectSnapToGround, tempCoords
 
+local function __resetControlsString()
+    controlsString = '[E] - Copy Offset  \n [Q] - Remove Shell'
+    UTILS.showControls(controlsString)
+end
+
 RegisterNetEvent("qw-offset:client:offsetFinder", function()
     if GetInvokingResource() then return end
 
@@ -103,9 +108,7 @@ RegisterNetEvent("qw-offset:client:offsetFinder", function()
                     inObjectPreview = false
                     tempObjectModel = nil
 
-                    -- return to default control string
-                    controlsString = '[E] - Copy Offset  \n [Q] - Remove Shell'
-                    UTILS.showControls(controlsString)
+                    __resetControlsString()
                 end
 
                 if IsControlJustPressed(0, 20) then -- press Z to create temp objects
@@ -115,9 +118,7 @@ RegisterNetEvent("qw-offset:client:offsetFinder", function()
                     inObjectPreview = false
                     tempObjectModel = nil
 
-                    -- return to default control string
-                    controlsString = '[E] - Copy Offset  \n [Q] - Remove Shell'
-                    UTILS.showControls(controlsString)
+                    __resetControlsString()
                 end
             end
         end
