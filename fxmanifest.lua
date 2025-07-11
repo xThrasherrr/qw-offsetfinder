@@ -17,4 +17,8 @@ shared_scripts {
     '@ox_lib/init.lua'
 }
 
+files {
+    'configs/shells.lua',
+}
+
 lua54 'yes'
