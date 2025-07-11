@@ -1,4 +1,5 @@
 local INTERIORS = lib.require('configs.shells')
+local ox_target = GetResourceState('ox_target') == 'started'
 
 local shellHandle
 local lastCoords
@@ -11,17 +12,19 @@ function utils.createTempObject(model, coords)
     local tempObject = utils.createObject(model, coords)
     SetEntityDrawOutline(tempObject, true)
 
-    exports.ox_target:addLocalEntity(tempObject, {
-        {
-            icon = 'fas fa-copy',
-            label = 'Copy Offset',
-            onSelect = function()
-                local heading = GetEntityHeading(tempObject)
+    if ox_target then
+        exports.ox_target:addLocalEntity(tempObject, {
+            {
+                icon = 'fas fa-copy',
+                label = 'Copy Offset',
+                onSelect = function()
+                    local heading = GetEntityHeading(tempObject)
 
-                utils.copyOffset(coords, heading)
-            end
-        }
-    })
+                    utils.copyOffset(coords, heading)
+                end
+            }
+        })
+    end
 
     tempObjects[#tempObjects + 1] = tempObject
 
