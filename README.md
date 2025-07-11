@@ -1,18 +1,17 @@
 # Offset finder for FiveM
 
-supports Player offsets and Object offsets
+Supports Player offsets and Object offsets
 
 ## Commands Available:
 
-`findoffsets`
-
-`findoffsets:object`
+`offsets`
 
 ## Links
 
 [Co-Authored by Zoo](https://github.com/Renewed-Scripts) - I am very much so brain dead so Zoo helped me get the offsets working correctly
+[Reworked by xT](https://github.com/xT-Development)
 
-[preview](https://streamable.com/my3fd6)
+[preview](https://streamable.com/ereyap)
 
 ## Warning
 
