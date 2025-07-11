@@ -3,7 +3,7 @@ game 'gta5'
 
 description 'offset finder for FiveM'
 author 'qw-scripts'
-version '1.0.0'
+version '2.0.0'
 
 client_scripts {
     'client/**/*'
