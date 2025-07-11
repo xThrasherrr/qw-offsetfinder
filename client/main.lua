@@ -114,6 +114,7 @@ RegisterNetEvent("qw-offset:client:offsetFinder", function()
                 if IsControlJustPressed(0, 20) then -- press Z to create temp objects
                     local vec4Coords = vec4(tempCoords.x, tempCoords.y, tempCoords.z, GetEntityHeading(tempObject))
 
+                    UTILS.removeObject(tempObject)
                     UTILS.createTempObject(tempObjectModel, vec4Coords)
                     inObjectPreview = false
                     tempObjectModel = nil
