@@ -2,8 +2,31 @@ local INTERIORS = lib.require('configs.shells')
 
 local shellHandle
 local lastCoords
+local tempObjects = {}
 
 local utils = {}
+
+-- creates temp object
+function utils.createTempObject(model, coords)
+    local tempObject = utils.createObject(model, coords)
+    SetEntityDrawOutline(tempObject, true)
+
+    exports.ox_target:addLocalEntity(tempObject, {
+        {
+            icon = 'fas fa-copy',
+            label = 'Copy Offset',
+            onSelect = function()
+                local heading = GetEntityHeading(tempObject)
+
+                utils.copyOffset(coords, heading)
+            end
+        }
+    })
+
+    tempObjects[#tempObjects + 1] = tempObject
+
+    return tempObject
+end
 
 -- remove object by handle
 function utils.removeObject(object)
@@ -22,7 +45,11 @@ function utils.createObject(model, coords)
 
     local object = CreateObject(model, coords.x, coords.y, coords.z, true, true, false)
     FreezeEntityPosition(object, true)
-    SetEntityHeading(object, 0.0)
+    SetEntityHeading(object, coords.w or 0.0)
+
+    while not DoesEntityExist(object) do
+        Wait(10)
+    end
 
     return object
 end
@@ -35,6 +62,15 @@ function utils.removeShell()
     end
 
     lib.hideTextUI()
+
+    if tempObjects and next(tempObjects) then
+        for x = 1, #tempObjects do
+            utils.removeObject(tempObjects[x])
+            exports.ox_target:removeLocalEntity(tempObjects[x])
+
+            tempObjects[x] = nil
+        end
+    end
 
     if lastCoords then
         SetEntityCoordsNoOffset(cache.ped, lastCoords.x, lastCoords.y, lastCoords.z, true, true, true)
@@ -55,8 +91,8 @@ function utils.createShell(shell)
 
     shellHandle = utils.createObject(shell, newCoords)
 
-    while not DoesEntityExist(shellHandle) or not HasCollisionForModelLoaded(shell) do
-        Wait(100)
+    while not HasCollisionForModelLoaded(shell) do
+        Wait(10)
     end
 
     SetEntityCollision(shellHandle, true, true)

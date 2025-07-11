@@ -44,7 +44,7 @@ RegisterNetEvent("qw-offset:client:offsetFinder", function()
             DeleteEntity(tempObject)
         end
 
-        controlsString = controlsString .. '  \n[L/R Arrow] Rotate Object  \n[X] Cancel Object Offset Finder'
+        controlsString = controlsString .. '  \n[L/R Arrow] Rotate Object  \n[Z] Place Object  \n[X] Cancel Object Offset Finder'
 
         local coords = GetEntityCoords(cache.ped)
 
@@ -100,6 +100,18 @@ RegisterNetEvent("qw-offset:client:offsetFinder", function()
 
                 if IsControlJustPressed(0, 73) then -- press X to cancel object offset finder
                     UTILS.removeObject(tempObject)
+                    inObjectPreview = false
+                    tempObjectModel = nil
+
+                    -- return to default control string
+                    controlsString = '[E] - Copy Offset  \n [Q] - Remove Shell'
+                    UTILS.showControls(controlsString)
+                end
+
+                if IsControlJustPressed(0, 20) then -- press Z to create temp objects
+                    local vec4Coords = vec4(tempCoords.x, tempCoords.y, tempCoords.z, GetEntityHeading(tempObject))
+
+                    UTILS.createTempObject(tempObjectModel, vec4Coords)
                     inObjectPreview = false
                     tempObjectModel = nil
 
